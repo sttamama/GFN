@@ -1,0 +1,18 @@
+{
+  "name": "global-food-archive",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest",
+    "next": "latest",
+    "chart.js": "latest",
+    "react-chartjs-2": "latest",
+    "lucide-react": "latest",
+    "tailwind-merge": "latest"
+  }
+}
