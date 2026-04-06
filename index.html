@@ -1,93 +1,82 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { ExternalLink, BarChart3, BookOpen } from 'lucide-react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Food Archive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide-static/0.321.0/lucide.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 text-white font-sans min-h-screen">
+    <div id="root" class="p-8">
+        <header class="max-w-6xl mx-auto mb-12 border-b border-slate-700 pb-6">
+            <h1 class="text-4xl font-bold mb-2 text-white">대한민국 (South Korea)</h1>
+            <p class="text-blue-400 text-xl font-semibold tracking-wide">비빔밥 (Bibimbap)</p>
+        </header>
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+        <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+            <section class="space-y-6">
+                <div class="aspect-video bg-slate-800 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center border border-slate-700">
+                    <p class="text-slate-500 font-medium">[고화질 음식 이미지 영역]</p>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700">
+                    <h3 class="text-lg font-semibold mb-3 flex items-center">📖 문화적 배경</h3>
+                    <p class="text-slate-300 leading-relaxed text-sm">다양한 나물과 고기, 고추장을 섞어 먹는 한국의 대표적인 절기 음식입니다. 영양학적으로 완벽한 균형을 자랑하며 글로벌 트렌드로 자리 잡았습니다.</p>
+                </div>
+            </section>
 
-const FoodDetail = ({ data }) => {
-  const chartData = {
-    labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
-    datasets: [{
-      label: 'Global Search Trend Index',
-      data: data.stats.trend,
-      borderColor: '#3b82f6',
-      backgroundColor: 'rgba(59, 130, 246, 0.5)',
-      tension: 0.4,
-    }],
-  };
+            <section class="space-y-6">
+                <div class="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">📊 데이터 인사이트</h3>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="p-4 bg-slate-900 rounded-lg">
+                            <p class="text-xs text-slate-500 uppercase">Market Size</p>
+                            <p class="text-2xl font-bold text-white">1.2B USD</p>
+                        </div>
+                        <div class="p-4 bg-slate-900 rounded-lg">
+                            <p class="text-xs text-slate-500 uppercase">Popularity</p>
+                            <p class="text-2xl font-bold text-green-400">85%</p>
+                        </div>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="foodChart"></canvas>
+                    </div>
+                </div>
 
-  return (
-    <div className="min-h-screen bg-slate-900 text-white p-8 font-sans">
-      {/* Header Section */}
-      <header className="max-w-6xl mx-auto mb-12 border-b border-slate-700 pb-6">
-        <h1 className="text-4xl font-bold mb-2">{data.name}</h1>
-        <p className="text-blue-400 text-xl font-medium tracking-wide">{data.food}</p>
-      </header>
-
-      <main className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Left Column: Visual & Description */}
-        <section className="space-y-6">
-          <div className="aspect-video bg-slate-800 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center border border-slate-700">
-             <span className="text-slate-500">[음식 고화질 이미지 영역]</span>
-          </div>
-          <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700">
-            <h3 className="flex items-center text-lg font-semibold mb-3">
-              <BookOpen className="mr-2 w-5 h-5 text-blue-400" /> 문화적 배경
-            </h3>
-            <p className="text-slate-300 leading-relaxed">{data.description}</p>
-          </div>
-        </section>
-
-        {/* Right Column: Data & Analytics */}
-        <section className="space-y-6">
-          <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700">
-            <h3 className="flex items-center text-lg font-semibold mb-4">
-              <BarChart3 className="mr-2 w-5 h-5 text-blue-400" /> 데이터 인사이트
-            </h3>
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="p-4 bg-slate-900 rounded-lg">
-                <p className="text-xs text-slate-500 uppercase tracking-tighter">Market Size</p>
-                <p className="text-2xl font-bold text-white">{data.stats.marketSize}</p>
-              </div>
-              <div className="p-4 bg-slate-900 rounded-lg">
-                <p className="text-xs text-slate-500 uppercase tracking-tighter">Popularity Index</p>
-                <p className="text-2xl font-bold text-green-400">{data.stats.globalPopularity}%</p>
-              </div>
-            </div>
-            {/* Chart */}
-            <div className="h-64">
-              <Line data={chartData} options={{ maintainAspectRatio: false, plugins: { legend: { display: false }}}} />
-            </div>
-          </div>
-
-          {/* Sources Section */}
-          <div className="bg-slate-900 p-4 rounded-lg border border-dashed border-slate-600">
-            <p className="text-sm text-slate-400 mb-2 font-semibold">신뢰할 수 있는 출처:</p>
-            <ul className="space-y-2">
-              {data.sources.map((source, index) => (
-                <li key={index} className="flex items-center text-xs text-blue-300 hover:underline">
-                  <a href={source.url} target="_blank" rel="noreferrer" className="flex items-center">
-                    {source.name} <ExternalLink className="ml-1 w-3 h-3" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      </main>
+                <div class="bg-slate-900 p-4 rounded-lg border border-dashed border-slate-600">
+                    <p class="text-sm text-slate-400 mb-2 font-semibold">신뢰할 수 있는 출처:</p>
+                    <ul class="space-y-1 text-xs text-blue-300">
+                        <li><a href="https://www.hansik.or.kr" target="_blank">한식진흥원 (Korean Food Promotion Institute) ↗</a></li>
+                        <li><a href="https://www.mafra.go.kr" target="_blank">농림축산식품부 ↗</a></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
     </div>
-  );
-};
 
-export default FoodDetail;
-
+    <script>
+        const ctx = document.getElementById('foodChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: 'Search Trend Index',
+                    data: [65, 70, 75, 82, 85, 92],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { display: false }, x: { grid: { color: '#334155' } } }
+            }
+        });
+    </script>
+</body>
+</html>
